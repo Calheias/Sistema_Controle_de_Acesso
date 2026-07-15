@@ -4,7 +4,7 @@
 
 void iniciarLeitor()
 {
-  Serial.println("Leitor iniciando.......");
+  Serial.println("[LEITOR] Leitor iniciando.......");
 }
 
 String lerCredencial();

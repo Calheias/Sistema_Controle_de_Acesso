@@ -19,7 +19,7 @@ void iniciarPorta()
 
     fecharPorta();
 
-    Serial.println("Servo inicializado.");
+    Serial.println("[PORTA] Servo inicializado.");
 }
 
 void abrirPorta()

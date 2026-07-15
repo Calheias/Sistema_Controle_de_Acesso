@@ -16,9 +16,9 @@ bool autenticarAcesso(
 )
 {
     Serial.println();
-    Serial.println("==============");
-    Serial.println("Autenticando...");
-    Serial.println("==============");
+    Serial.println("=====================");
+    Serial.println("[API] Autenticando...");
+    Serial.println("=====================");
 
     HTTPClient http;
     http.begin(API_URL);
@@ -41,7 +41,7 @@ bool autenticarAcesso(
 
     if (httpCode != 200)
     {
-      Serial.println("Erro na comunicação com a API.");
+      Serial.println("[API] Erro na comunicação com a API.");
       http.end();
       return false;
     }
@@ -53,7 +53,7 @@ bool autenticarAcesso(
     String motivo = doc["motivo"];
     Serial.println("==============");
     Serial.println(resposta);
-    Serial.println("Resultado: ");
+    Serial.println("[API] Resultado: ");
     Serial.println(motivo);
     http.end();
 

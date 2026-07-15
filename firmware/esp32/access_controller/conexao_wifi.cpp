@@ -10,9 +10,9 @@
 void iniciarWifi()
 {
     Serial.println();
-    Serial.println("==============================");
-    Serial.println("Conectando ao Wi-Fi...");
-    Serial.println("==============================");
+    Serial.println("=============================");
+    Serial.println("[WIFI] Conectando ao Wi-Fi...");
+    Serial.println("=============================");
 
     WiFi.mode(WIFI_STA);
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -24,7 +24,7 @@ void iniciarWifi()
     }
 
     Serial.println();
-    Serial.println("Wi-Fi conectado!");
+    Serial.println("[WIFI] conectado!");
     Serial.print("IP: ");
     Serial.println(WiFi.localIP());
 }
