@@ -1,3 +1,5 @@
+// Código de conexão com o módulo wifi da ESP 
+
 #include <Arduino.h>
 #include <WiFi.h>
 
