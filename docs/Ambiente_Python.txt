@@ -1,0 +1,21 @@
+Criação do ambiente - venv
+
+bibliotecas do ambiente:
+pip install fastapi
+pip install uvicorn
+pip install sqlalchemy
+pip install psycopg2-binary
+pip install jinja2
+pip install python-multipart
+pip install pyserial
+
+Log_backend:
+| Arquivo          | Função                  |
+| ---------------- | ----------------------- |
+| main.py          | Inicia o sistema        |
+| database.py      | Conexão com o banco     |
+| models.py        | Tabelas                 |
+| schemas.py       | Modelos da API          |
+| crud.py          | Operações no banco      |
+| serial_reader.py | Comunicação com Arduino |
+| config.py        | Configurações           |
