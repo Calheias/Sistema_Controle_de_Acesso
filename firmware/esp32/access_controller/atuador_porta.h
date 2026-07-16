@@ -5,9 +5,7 @@
 
 
 void iniciarPorta();
-
 void abrirPorta();
-
 void fecharPorta();
 
 #endif

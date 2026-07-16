@@ -7,9 +7,10 @@
 
 #include "comunicacao_api.h"
 #include "credenciais.h"
+#include "autenticacao.h"
 
 
-bool autenticarAcesso(
+Autenticacao autenticarAcesso(
     const String &uid,
     int deviceId,
     int doorId
@@ -43,19 +44,37 @@ bool autenticarAcesso(
     {
       Serial.println("[API] Erro na comunicação com a API.");
       http.end();
-      return false;
+
+      Autenticacao resultado;
+      resultado.autorizado = false;
+      resultado.motivo = "ERRO_API";
+      resultado.uid = uid;
+      resultado.deviceId = deviceId;
+      resultado.doorId = doorId;
+      resultado.userId = -1;
+      resultado.credentialId = -1;      
+
+      return resultado;
     }
 
     String resposta = http.getString();
     JsonDocument doc;
     deserializeJson(doc, resposta);
-    bool autorizado = doc["autorizado"];
-    String motivo = doc["motivo"];
+
+    Autenticacao resultado;
+    resultado.autorizado = doc["autorizado"].as<bool>();
+    resultado.motivo = doc["motivo"].as<String>();      // ????? tipo MemberProxy -> Versão do ArduinoJson
+    resultado.credentialId = doc["credential_id"] | -1;
+    resultado.userId = doc["user_id"] | -1;
+    resultado.deviceId = doc["device_id"] | deviceId;
+    resultado.doorId = doc["door_id"] | doorId;
+    resultado.uid = doc["uid"].as<String>();
+
     Serial.println("==============");
     Serial.println(resposta);
     Serial.println("[API] Resultado: ");
-    Serial.println(motivo);
+    Serial.println(resultado.motivo);
     http.end();
 
-    return autorizado;
+    return resultado;
 }

@@ -5,3 +5,4 @@ __pycache__/
 .env
 .vscode/
 .idea/
+firmware/esp32/access_controller/credenciais.h
