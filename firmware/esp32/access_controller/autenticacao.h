@@ -3,11 +3,11 @@
 
 #include <Arduino.h>
 
+
 struct Autenticacao
 {
     bool autorizado;
     String motivo;
-
     int credentialId;
     int userId;
     int deviceId;

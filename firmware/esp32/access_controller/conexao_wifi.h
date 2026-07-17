@@ -3,7 +3,6 @@
 
 
 void iniciarWifi();
-
 bool wifiConectado();
 
 #endif

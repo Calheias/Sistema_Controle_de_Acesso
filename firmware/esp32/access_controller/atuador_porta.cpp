@@ -12,10 +12,14 @@ Servo servoPorta;
 constexpr uint8_t PINO_SERVO = 18;
 constexpr uint8_t POSICAO_FECHADA = 0;
 constexpr uint8_t POSICAO_ABERTA = 90;
+constexpr int PINO_RELE = 21;
+
 
 void iniciarPorta()
 {
     servoPorta.attach(PINO_SERVO);
+    pinMode(PINO_RELE, OUTPUT);
+    digitalWrite(PINO_RELE, LOW);
 
     fecharPorta();
 
@@ -24,24 +28,19 @@ void iniciarPorta()
 
 void abrirPorta()
 {
-    
     Serial.println("Abrindo porta...");
+    digitalWrite(PINO_RELE, HIGH);
     servoPorta.write(POSICAO_ABERTA);
-    /*
-    servoPorta.write(POSICAO_ABERTA);
-
+    delay(500);
     Serial.println("Porta aberta.");
-    */
+    delay(2000);
 }
 
 void fecharPorta()
 {
-    
     Serial.println("Fechando porta...");
+    digitalWrite(PINO_RELE, LOW);
     servoPorta.write(POSICAO_FECHADA);
-    /*
-    servoPorta.write(POSICAO_FECHADA);
-
+    delay(500);
     Serial.println("Porta fechada.");
-    */
 }
