@@ -9,32 +9,32 @@
 #include "credenciais.h"
 #include "autenticacao.h"
 
-
 Autenticacao autenticarAcesso(
     const String &uid,
     int deviceId,
-    int doorId
-)
+    int doorId)
 {
     Serial.println();
-    Serial.println("=====================");
+    Serial.println("===============================");
     Serial.println("[API] Autenticando...");
-    Serial.println("=====================");
+    Serial.println("===============================");
 
     HTTPClient http;
     http.begin(API_URL);
     http.addHeader(
-    "Content-Type",
-    "application/json"
-    );
+        "Content-Type",
+        "application/json");
 
-    String json = 
-    "{"
-    "\"uid\":\"" + uid + "\","
-    "\"tipo_credencial\":\"RFID\","
-    "\"device_id\":" + String(deviceId) + "," 
-    "\"door_id\":" + String(doorId) + 
-    "}";
+    String json =
+        "{"
+        "\"uid\":\"" +
+        uid + "\","
+              "\"tipo_credencial\":\"RFID\","
+              "\"device_id\":" +
+        String(deviceId) + ","
+                           "\"door_id\":" +
+        String(doorId) +
+        "}";
 
     int httpCode = http.POST(json);
     Serial.print("HTTP: ");
@@ -42,19 +42,19 @@ Autenticacao autenticarAcesso(
 
     if (httpCode != 200)
     {
-      Serial.println("[API] Erro na comunicação com a API.");
-      http.end();
+        Serial.println("[API] Erro na comunicação com a API.");
+        http.end();
 
-      Autenticacao resultado;
-      resultado.autorizado = false;
-      resultado.motivo = "ERRO_API";
-      resultado.uid = uid;
-      resultado.deviceId = deviceId;
-      resultado.doorId = doorId;
-      resultado.userId = -1;
-      resultado.credentialId = -1;      
+        Autenticacao resultado;
+        resultado.autorizado = false;
+        resultado.motivo = "ERRO_API";
+        resultado.uid = uid;
+        resultado.deviceId = deviceId;
+        resultado.doorId = doorId;
+        resultado.userId = -1;
+        resultado.credentialId = -1;
 
-      return resultado;
+        return resultado;
     }
 
     String resposta = http.getString();
@@ -63,17 +63,21 @@ Autenticacao autenticarAcesso(
 
     Autenticacao resultado;
     resultado.autorizado = doc["autorizado"].as<bool>();
-    resultado.motivo = doc["motivo"].as<String>();      // ????? tipo MemberProxy -> Versão do ArduinoJson
+    resultado.motivo = doc["motivo"].as<String>(); // ????? tipo MemberProxy -> Versão do ArduinoJson
     resultado.credentialId = doc["credential_id"] | -1;
     resultado.userId = doc["user_id"] | -1;
     resultado.deviceId = doc["device_id"] | deviceId;
     resultado.doorId = doc["door_id"] | doorId;
     resultado.uid = doc["uid"].as<String>();
 
-    Serial.println("==============");
+    Serial.println("===============================");
+    Serial.println();
+    Serial.println();
     Serial.println(resposta);
+    Serial.println("===============================");
     Serial.println("[API] Resultado: ");
     Serial.println(resultado.motivo);
+    Serial.println("===============================");
     http.end();
 
     return resultado;

@@ -1,3 +1,5 @@
+// módulo usado para transformar o loop em uma máquina de estados
+
 #ifndef ESTADO_CONTROLADOR_H
 #define ESTADO_CONTROLADOR_H
 
