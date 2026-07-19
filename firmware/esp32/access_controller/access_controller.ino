@@ -16,6 +16,14 @@ StateControl estado = INICIALIZANDO;
 void setup()
 {
     Serial.begin(115200);
+    delay(2000);
+
+    carregarConfiguracao();
+    config.deviceId = 15;
+    config.doorId = 3;
+    config.nomeDevice = "ESP Laboratorio";
+    salvarConfiguracao();
+
     iniciarPorta();
     iniciarRFID();
 
@@ -23,11 +31,11 @@ void setup()
     Serial.println("================================");
     Serial.println("CONTROLADOR INICIADO");
     Serial.print("Nome: ");
-    Serial.println(NOME_CONTROLADOR);
-    Serial.print("Device ID: ");
-    Serial.println(DEVICE_ID);
-    Serial.print("Door ID: ");
-    Serial.println(DOOR_ID);
+    Serial.println(config.nomeDevice);
+    Serial.print("device_ID: ");
+    Serial.println(config.deviceId);
+    Serial.print("door_ID: ");
+    Serial.println(config.doorId);
     Serial.println("================================");
         
     estado = CONECTANDO_WIFI;
@@ -82,8 +90,8 @@ void loop()
 
             Autenticacao resultado = autenticarAcesso(
                 uid,
-                DEVICE_ID,
-                DOOR_ID
+                config.deviceId,
+                config.doorId
             );
 
             resultadoAutenticacao(resultado);
@@ -119,6 +127,7 @@ void loop()
         {
             Serial.println("ACESSO NEGADO");
             estado = AGUARDANDO_CREDENCIAL;
+            delay(2000);
             break;
         }
 

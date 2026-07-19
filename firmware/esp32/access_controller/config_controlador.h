@@ -3,8 +3,16 @@
 
 #include <Arduino.h>
 
-extern const int DEVICE_ID; 
-extern const int DOOR_ID;
-extern const char* NOME_CONTROLADOR;
+struct ConfigControlador
+{
+    int deviceId;
+    int doorId;
+    String nomeDevice;
+};
+
+extern ConfigControlador config;
+
+void carregarConfiguracao();
+void salvarConfiguracao();
 
 #endif
