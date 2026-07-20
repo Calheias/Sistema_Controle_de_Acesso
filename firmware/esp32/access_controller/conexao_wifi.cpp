@@ -23,9 +23,24 @@ void iniciarWifi()
         Serial.print(".");
     }
 
+    Serial.println(WiFi.localIP());
+
+    IPAddress pc(192,168,1,33);
+
+    Serial.print("Ping PC: ");
+    Serial.println(WiFi.hostByName("192.168.1.33", pc));
+
     Serial.println();
     Serial.print("IP: ");
     Serial.println(WiFi.localIP());
+    Serial.print("Gateway: ");
+    Serial.println(WiFi.gatewayIP());
+
+    Serial.print("Subnet: ");
+    Serial.println(WiFi.subnetMask());
+
+    Serial.print("DNS: ");
+    Serial.println(WiFi.dnsIP());
 }
 
 bool wifiConectado()

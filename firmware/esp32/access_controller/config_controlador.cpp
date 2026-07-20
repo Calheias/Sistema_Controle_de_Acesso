@@ -5,13 +5,13 @@
 ConfigControlador config;
 Preferences pref;
 
-
 void carregarConfiguracao()
 {
     pref.begin("controller", true);
     config.deviceId = pref.getInt("deviceId", 1);
     config.doorId = pref.getInt("doorId", 1);
     config.nomeDevice = pref.getString("nome", "ESP 32");
+    config.tempoAberturaMs = pref.getUShort("tempo", 2000);  // getUShort por conta do tipo uint16_t (2 bytes)
     pref.end();
 }
 
@@ -19,8 +19,36 @@ void carregarConfiguracao()
 void salvarConfiguracao()
 {
     pref.begin("controller", false);
-    config.deviceId = pref.getInt("deviceId", config.deviceId);
-    config.doorId = pref.getInt("doorId", config.doorId);
-    config.nomeDevice = pref.getString("nome", config.nomeDevice);
+    pref.putInt("deviceId", config.deviceId);
+    pref.putInt("doorId", config.doorId);
+    pref.putString("nome", config.nomeDevice);
+    pref.putUShort("tempo", config.tempoAberturaMs);
     pref.end();
+}
+
+
+void configurarPadrao()
+{
+    config.deviceId = 0;
+    config.doorId = 0;
+    config.nomeDevice = "NAO_CONFIGURADO";
+    config.tempoAberturaMs = 2000;
+}
+
+
+void imprimirConfiguracao()
+{
+    Serial.println();
+    Serial.println("================================");
+    Serial.println("CONTROLADOR INICIADO");
+    Serial.print("Nome: ");
+    Serial.println(config.nomeDevice);
+    Serial.print("device_ID: ");
+    Serial.println(config.deviceId);
+    Serial.print("door_ID: ");
+    Serial.println(config.doorId);
+    Serial.print("Tempo Porta: ");
+    Serial.print(config.tempoAberturaMs);
+    Serial.println(" ms");
+    Serial.println("================================");
 }

@@ -18,9 +18,15 @@ Autenticacao autenticarAcesso(
     Serial.println("===============================");
     Serial.println("[API] Autenticando...");
     Serial.println("===============================");
-
+    
+    WiFiClient client;
     HTTPClient http;
-    http.begin(API_URL);
+
+    Serial.print("[API] URL: ");
+    Serial.println(API_URL);
+    
+    http.begin(client, API_URL);
+
     http.addHeader(
         "Content-Type",
         "application/json");
@@ -36,9 +42,25 @@ Autenticacao autenticarAcesso(
         String(doorId) +
         "}";
 
+    if (!client.connect("192.168.1.33", 8000))
+    {
+        Serial.println("Nao conseguiu abrir socket");
+    }
+    else
+    {
+        Serial.println("Socket conectado");
+        client.stop();
+    }
+
     int httpCode = http.POST(json);
     Serial.print("HTTP: ");
     Serial.println(httpCode);
+
+    if (httpCode < 0)
+    {
+        Serial.print("Erro HTTP: ");
+        Serial.println(http.errorToString(httpCode));
+    }
 
     if (httpCode != 200)
     {

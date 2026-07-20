@@ -31,9 +31,7 @@ void abrirPorta()
     Serial.println("Abrindo porta...");
     digitalWrite(PINO_RELE, HIGH);
     servoPorta.write(POSICAO_ABERTA);
-    delay(500);
     Serial.println("Porta aberta.");
-    delay(2000);
 }
 
 void fecharPorta()
@@ -41,6 +39,5 @@ void fecharPorta()
     Serial.println("Fechando porta...");
     digitalWrite(PINO_RELE, LOW);
     servoPorta.write(POSICAO_FECHADA);
-    delay(500);
     Serial.println("Porta fechada.");
 }
